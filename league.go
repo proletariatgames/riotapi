@@ -92,7 +92,7 @@ type LeagueMethod struct {
 	client *Client
 }
 
-func (m *LeagueMethod) LeagueEntryBySummoner(summonerId int64, platformId string) (LeagueResponseMap, error) {
+func (m *LeagueMethod) EntryBySummoner(summonerId int64, platformId string) (LeagueResponseMap, error) {
 	relPath := "/api/lol/{region}/v2.5/league/by-summoner/" + strconv.FormatInt(summonerId, 10) + "/entry"
 	data := make(LeagueResponseMap)
 	if _, err := m.client.get(regionURLBase, relPath, platformId, &data); err != nil {

@@ -27,7 +27,7 @@ type SummonerMethod struct {
 	client *Client
 }
 
-func (m *SummonerMethod) SummonersByName(name, platformId string) (*SummonerDTO, error) {
+func (m *SummonerMethod) ByName(name, platformId string) (*SummonerDTO, error) {
 	relPath := "/lol/summoner/v3/summoners/by-name/" + name
 	data := new(SummonerDTO)
 	if _, err := m.client.get(platformURLBase, relPath, platformId, data); err != nil {
