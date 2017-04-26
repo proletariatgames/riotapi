@@ -1,1 +1,7 @@
-memo = "ab4fef131ee828e96ba67d31a7d690bd5f2f42040c6766b1b12fe856f87e0ff7"
+memo = "f750d93cedc7d71e4db6f1cbe642a49d4970849e6059596d7667dbabaf9397d9"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-querystring"
+  packages = ["query"]
+  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"

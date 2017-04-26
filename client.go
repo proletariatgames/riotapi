@@ -22,10 +22,11 @@ const platformURLBase = "https://{platform}.api.riotgames.com"
 const regionURLBase = "https://{region}.api.riotgames.com"
 
 type Client struct {
-	client   *http.Client
-	APIKey   string
-	Summoner *SummonerMethod
-	League   *LeagueMethod
+	client    *http.Client
+	APIKey    string
+	Summoner  *SummonerMethod
+	League    *LeagueMethod
+	MatchList *MatchListMethod
 	// TODO throttle rate limiting info
 }
 
@@ -38,6 +39,7 @@ func NewClient(httpClient *http.Client) *Client {
 
 	c.Summoner = &SummonerMethod{client: c}
 	c.League = &LeagueMethod{client: c}
+	c.MatchList = &MatchListMethod{client: c}
 
 	// TODO rate limiting info
 
