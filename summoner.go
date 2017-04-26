@@ -30,7 +30,7 @@ type SummonerMethod struct {
 func (m *SummonerMethod) SummonersByName(name, platformId string) (*SummonerDTO, error) {
 	relPath := "/lol/summoner/v3/summoners/by-name/" + name
 	data := new(SummonerDTO)
-	if _, err := m.client.get(platformUrlBase, relPath, platformId, data); err != nil {
+	if _, err := m.client.get(platformURLBase, relPath, platformId, data); err != nil {
 		return nil, err
 	}
 	return data, nil

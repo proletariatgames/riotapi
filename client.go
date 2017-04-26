@@ -16,16 +16,17 @@ var (
 )
 
 // Version 3+ format, e.g. https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/{name}
-const platformUrlBase = "https://{platform}.api.riotgames.com"
+const platformURLBase = "https://{platform}.api.riotgames.com"
 
 // Version <3 format, e.g.
-const regionUrlBase = "https://{region}.api.riotgames.com/api"
+const regionURLBase = "https://{region}.api.riotgames.com"
 
 type Client struct {
-	client *http.Client
-	APIKey string
-	// TODO throttle rate limiting info
+	client   *http.Client
+	APIKey   string
 	Summoner *SummonerMethod
+	League   *LeagueMethod
+	// TODO throttle rate limiting info
 }
 
 // NewClient initializes and returns a riotapi Client struct
@@ -36,6 +37,7 @@ func NewClient(httpClient *http.Client) *Client {
 	}
 
 	c.Summoner = &SummonerMethod{client: c}
+	c.League = &LeagueMethod{client: c}
 
 	// TODO rate limiting info
 
