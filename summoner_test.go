@@ -1,21 +1,12 @@
 package riotapi
 
 import (
-	"net/http"
-	"os"
 	"testing"
 	"time"
 )
 
 func TestSummonerMethod_ByName(t *testing.T) {
-	tc := NewClient(new(http.Client))
-
-	tc.APIKey = os.Getenv("RIOTAPI_KEY")
-
-	if len(tc.APIKey) == 0 {
-		t.Error("RIOTAPI_KEY environment variable not set. Must be set to execute tests.")
-	}
-	data, err := tc.Summoner.ByName("YewNewb", "NA1")
+	data, err := testClient.Summoner.ByName("YewNewb", "NA1")
 
 	if err != nil {
 		t.Errorf("Summoner.ByName error = %v", err)
