@@ -8,6 +8,9 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
+
+	"gopkg.in/throttled/throttled.v2"
 )
 
 var (
@@ -22,26 +25,25 @@ const platformURLBase = "https://{platform}.api.riotgames.com"
 const regionURLBase = "https://{region}.api.riotgames.com"
 
 type Client struct {
-	client    *http.Client
-	APIKey    string
-	Summoner  *SummonerMethod
-	League    *LeagueMethod
-	MatchList *MatchListMethod
-	// TODO throttle rate limiting info
+	client      *http.Client
+	APIKey      string
+	Summoner    *SummonerMethod
+	League      *LeagueMethod
+	MatchList   *MatchListMethod
+	RateLimiter *throttled.GCRARateLimiter
 }
 
 // NewClient initializes and returns a riotapi Client struct
 func NewClient(httpClient *http.Client) *Client {
 	c := &Client{
-		client: httpClient,
-		APIKey: "",
+		client:      httpClient,
+		APIKey:      "",
+		RateLimiter: nil,
 	}
 
 	c.Summoner = &SummonerMethod{client: c}
 	c.League = &LeagueMethod{client: c}
 	c.MatchList = &MatchListMethod{client: c}
-
-	// TODO rate limiting info
 
 	return c
 }
@@ -68,6 +70,22 @@ func (c *Client) get(basePath, relPath, platformId string, decoded interface{}) 
 	q := combinedURL.Query()
 	q.Set("api_key", c.APIKey)
 	combinedURL.RawQuery = q.Encode()
+
+	// Check rate limiting and wait if necessary
+	if c.RateLimiter != nil {
+		// rate limits are per region, so use the region in the key
+		for {
+			limited, context, err := c.RateLimiter.RateLimit("riotapi-"+platform.Id, 1)
+			if err != nil {
+				return nil, err
+			}
+			if limited {
+				time.Sleep(context.RetryAfter)
+			} else {
+				break
+			}
+		}
+	}
 
 	req, err := http.NewRequest("GET", combinedURL.String(), nil)
 

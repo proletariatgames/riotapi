@@ -17,8 +17,6 @@ func TestMatchListMethod_MatchList(t *testing.T) {
 	options.RankedQueues = "TEAM_BUILDER_RANKED_SOLO"
 
 	data, err := testClient.MatchList.BySummoner(summonerId, "NA1", options)
-	// sleep to stick withing Riot API rate limit of 10/10sec
-	time.Sleep(1250 * time.Millisecond)
 
 	if err != nil {
 		t.Errorf("MatchList.BySummoner error = %v", err)

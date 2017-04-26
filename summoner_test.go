@@ -2,7 +2,6 @@ package riotapi
 
 import (
 	"testing"
-	"time"
 )
 
 func TestSummonerMethod_ByName(t *testing.T) {
@@ -17,7 +16,4 @@ func TestSummonerMethod_ByName(t *testing.T) {
 	if data.Id != expectedId {
 		t.Errorf("Summoner.ByName Id = %v, want %v", data.Id, expectedId)
 	}
-
-	// sleep to stick withing Riot API rate limit of 10/10sec
-	time.Sleep(1250 * time.Millisecond)
 }

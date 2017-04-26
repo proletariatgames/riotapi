@@ -11,7 +11,7 @@ type Platform struct {
 	RegionId string // e.g. "NA"
 }
 
-var platforms = []Platform{
+var Platforms = []Platform{
 	{"NA1", "North America", "NA"},
 	{"BR1", "Brazil", "BR"},
 	{"EUN1", "EU Nordic & East ", "EUNE"},
@@ -29,7 +29,7 @@ var platforms = []Platform{
 // GetPlatform returns the platform description for a given platform id (case-insensitive)
 func GetPlatform(id string) *Platform {
 	upperId := strings.ToUpper(id)
-	for _, p := range platforms {
+	for _, p := range Platforms {
 		if upperId == p.Id {
 			return &p
 		}
