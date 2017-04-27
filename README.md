@@ -7,8 +7,8 @@ Very Work In Progress
 ## APIs Implemented
 * LEAGUE-V2.5
 * * [Get league entries mapped by summoner ID for a given list of summoner IDs.][league_entries]
-* MATCHLIST-V2.2
-* * [Retrieve match list by summoner ID.][matchlist]
+* MATCH-V3
+* * [Get matchlist for ranked games played on given account ID and platform ID and filtered using given filter parameters, if any.][matchlist]
 * SUMMONER-V3
 * * [Get a summoner by summoner name.][summoner-byname]
 
