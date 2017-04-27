@@ -36,3 +36,14 @@ func GetPlatform(id string) *Platform {
 	}
 	return nil
 }
+
+// GetPlatform returns the platform description for a given platform id (case-insensitive)
+func GetPlatformByRegion(region string) *Platform {
+	upperRegion := strings.ToUpper(region)
+	for _, p := range Platforms {
+		if upperRegion == p.RegionId {
+			return &p
+		}
+	}
+	return nil
+}
