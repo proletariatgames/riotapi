@@ -32,6 +32,9 @@ with `go test`. You can obtain your API Key from Riot at [Riot's Developer Websi
 
 As mentioned above, the tests specify a rate limiter using the developer limits API rate limits.
 
+## License
+All files under this repository fall under the MIT License (see the file LICENSE).
+
 [league_entries]: https://developer.riotgames.com/api-methods/#league-v2.5/GET_getLeagueEntriesForSummonerIds
 [matchlist]: https://developer.riotgames.com/api-methods/#matchlist-v2.2/GET_getMatchList
 [riotdev]: https://developer.riotgames.com
