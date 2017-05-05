@@ -14,9 +14,8 @@ func TestMatchListMethod_MatchList(t *testing.T) {
 		t.Errorf("MatchList.ByAccount could not parse duration")
 	}
 	options.BeginTime = time.Now().Add(minusTwoWeeks).Unix() * 1000 // seconds to ms
-	options.Queues = make([]QueueType, 2)
+	options.Queues = make([]QueueType, 1)
 	options.Queues[0] = TEAM_BUILDER_RANKED_SOLO
-	options.Queues[1] = RANKED_SOLO_5x5
 
 	data, err := testClient.MatchList.ByAccount(accountId, "NA1", options)
 
