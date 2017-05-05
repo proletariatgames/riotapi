@@ -30,4 +30,15 @@ func TestLeagueMethod_EntryBySummoner(t *testing.T) {
 	if len(leagues[0].Entries) == 0 {
 		t.Errorf("League.EntryBySummoner first league (queue = %v, tier = %v) has no entries; expected at least one entry", leagues[0].Queue, leagues[0].Tier)
 	}
+
+	positions, err := testClient.League.PositionsBySummoner(summonerId, "NA1")
+	if err != nil {
+		t.Errorf("League.PositionsBySummoner error = %v", err)
+		return
+	}
+
+	if len(positions) == 0 {
+		t.Errorf("League.PositionsBySummoner has no leagues; expected at least one league")
+		return
+	}
 }

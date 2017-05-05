@@ -72,6 +72,50 @@ type LeagueEntryDTO struct {
 	LeaguePoints int `json:"leaguePoints"`
 }
 
+type LeaguePositionSlice []LeaguePositionDTO
+
+// LeaguePositionDto describes a single position entry for a summoner in a League
+type LeaguePositionDTO struct {
+	// Name of the League
+	LeagueName string `json:"leagueName"`
+
+	// Specifies if the participant is fresh blood.
+	FreshBlood bool `json:"freshBlood"`
+
+	// The league rank of the participant: I, II, III, IV, V
+	Rank string `json:"rank"`
+
+	// Mini series data for the participant. Only present if the participant
+	// is currently in a mini series.
+	MiniSeries *MiniSeriesDTO `json:"miniSeries,omitempty"`
+
+	// The number of wins for the participant.
+	Wins int `json:"wins"`
+
+	// The number of losses for the participant.
+	Losses int `json:"losses"`
+
+	// The ID of the participant (i.e., summoner or team) represented by
+	// this entry.
+	PlayerOrTeamId string `json:"playerOrTeamId"`
+
+	// The name of the the participant (i.e., summoner or team) represented
+	// by this entry.
+	PlayerOrTeamName string `json:"playerOrTeamName"`
+
+	//  Specifies if the participant is on a hot streak.
+	HotStreak bool `json:"hotStreak"`
+
+	//  Specifies if the participant is inactive.
+	Inactive bool `json:"inactive"`
+
+	// Specifies if the participant is a veteran.
+	Veteran bool `json:"veteran"`
+
+	// The league points of the participant.
+	LeaguePoints int `json:"leaguePoints"`
+}
+
 type MiniSeriesDTO struct {
 	// String showing the current, sequential mini series progress where
 	// 'W' represents a win, 'L' represents a loss, and 'N' represents a
@@ -96,6 +140,15 @@ func (m *LeagueMethod) EntryBySummoner(summonerId int64, platformId string) (Lea
 	relPath := "/api/lol/{region}/v2.5/league/by-summoner/" + strconv.FormatInt(summonerId, 10) + "/entry"
 	data := make(LeagueResponseMap)
 	if _, err := m.client.get(regionURLBase, relPath, platformId, &data); err != nil {
+		return nil, err
+	}
+	return data, nil
+}
+
+func (m *LeagueMethod) PositionsBySummoner(summonerId int64, platformId string) (LeaguePositionSlice, error) {
+	relPath := "/lol/league/v3/positions/by-summoner/" + strconv.FormatInt(summonerId, 10)
+	data := make(LeaguePositionSlice, 0)
+	if _, err := m.client.get(platformURLBase, relPath, platformId, &data); err != nil {
 		return nil, err
 	}
 	return data, nil
